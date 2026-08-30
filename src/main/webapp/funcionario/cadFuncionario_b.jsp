@@ -9,6 +9,7 @@
 	</head>
 	<body class="bg-secondary">	
 		<div class="container">
+			<jsp:include page="./navbar.jsp" />
 			<div class="row mt-5 mb-2">
 				<div class="col-sm p-0">
 					<s:form action="/filtrarFuncionarios.action">
@@ -117,10 +118,9 @@
 		
 		<script>
 		    function prepararExclusao(idFuncionario) {
-		        // Pega o botão "Sim" do modal pelo ID
+
 		        var btnSim = document.getElementById('btnSimExcluir');
 		        
-		        // Monta a URL do Struts passando o ID do funcionário como parâmetro
 		        btnSim.href = 'excluirFuncionarios.action?funcionarioVo.rowid=' + idFuncionario;
 		    }
 		</script>
