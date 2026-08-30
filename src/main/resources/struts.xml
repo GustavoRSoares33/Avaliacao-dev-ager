@@ -15,6 +15,7 @@
         <action name="*Funcionarios" class="br.com.soc.sistema.action.FuncionarioAction" method="{1}">
         	<result name="success">/funcionario/cadFuncionario_b.jsp</result>
             <result name="input">/funcionario/cadFuncionario_i.jsp</result>
+            <result name="editarFuncionario">/funcionario/editFuncionario_i.jsp</result>
         	<result name="redirect" type="redirectAction">todosFuncionarios</result>
         </action>
     </package>

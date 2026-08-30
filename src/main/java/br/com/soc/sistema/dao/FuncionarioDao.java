@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.soc.sistema.exception.TechnicalException;
 import br.com.soc.sistema.vo.FuncionarioVo;
 
 public class FuncionarioDao extends Dao {
@@ -16,13 +17,45 @@ public class FuncionarioDao extends Dao {
 		StringBuilder query = new StringBuilder("INSERT INTO funcionario (nm_funcionario) values (?)");
 		try(
 			Connection con = getConexao();
-			PreparedStatement  ps = con.prepareStatement(query.toString())){
+			PreparedStatement ps = con.prepareStatement(query.toString())){
 			
 			int i=1;
 			ps.setString(i++, funcionarioVo.getNome());
 			ps.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
+			throw new TechnicalException("Erro ao inserir o funcionário", e);
+		}
+	}
+	
+	public void updateFuncionario(FuncionarioVo funcionarioVo){
+		StringBuilder query = new StringBuilder("UPDATE funcionario SET nm_funcionario = ? WHERE rowid = ?");
+		try(
+			Connection con = getConexao();
+			PreparedStatement ps = con.prepareStatement(query.toString())){
+			
+			int i=1;
+			ps.setString(i++, funcionarioVo.getNome());
+			ps.setString(i++, funcionarioVo.getRowid());
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new TechnicalException("Erro ao atualizar o funcionário", e);
+		}
+	}
+	
+	public void deleteFuncionario(FuncionarioVo funcionarioVo){
+		StringBuilder query = new StringBuilder("DELETE FROM funcionario WHERE rowid = ?");
+		try(
+			Connection con = getConexao();
+			PreparedStatement ps = con.prepareStatement(query.toString())){
+			
+			int i=1;
+			ps.setString(i++, funcionarioVo.getRowid());
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new TechnicalException("Erro ao deletar o funcionário", e);
 		}
 	}
 	

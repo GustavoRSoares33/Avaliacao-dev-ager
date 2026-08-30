@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"  pageEncoding="UTF8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF8">
+		<meta charset="UTF-8">
 		<title><s:text name="label.titulo.pagina.consulta"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
@@ -58,8 +58,8 @@
 										<s:text name="label.editar"/>
 									</a>
 
-									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao">
-										<s:text name="label.excluir"/>
+									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" onclick="prepararExclusao('${rowid}')">
+									    <s:text name="label.excluir"/>
 									</a>
 								</td>
 							</tr>
@@ -105,14 +105,24 @@
 					<s:text name="label.nao"/>
 				</a>
 	        	
-				<s:a id="excluir" class="btn btn-primary" style="width: 75px;">
-					<s:text name="label.sim"/>
-				</s:a>						
+				<a id="btnSimExcluir" href="#" class="btn btn-primary" style="width: 75px;">
+				    <s:text name="label.sim"/>
+				</a>					
 		      </div>
 		    </div>		    
 		  </div>
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+		
+		<script>
+		    function prepararExclusao(idFuncionario) {
+		        // Pega o botão "Sim" do modal pelo ID
+		        var btnSim = document.getElementById('btnSimExcluir');
+		        
+		        // Monta a URL do Struts passando o ID do funcionário como parâmetro
+		        btnSim.href = 'excluirFuncionarios.action?funcionarioVo.rowid=' + idFuncionario;
+		    }
+		</script>
 	</body>
 </html>

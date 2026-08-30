@@ -31,8 +31,32 @@ public class FuncionarioBusiness {
 			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
 		}
 		
-	}	
+	}
 	
+	public void alterarFuncionario(FuncionarioVo funcionarioVo) {
+		
+		if(funcionarioVo.getNome() == null || funcionarioVo.getNome().trim().isEmpty()) {
+			throw new IllegalArgumentException("Nome nao pode ser em branco");
+		}
+		
+		try {
+			dao.updateFuncionario(funcionarioVo);
+		} catch (Exception e) {
+			throw new BusinessException("Nao foi possivel realizar a alteração do registro");
+		}
+		
+	}
+	
+	public void deletarFuncionario(FuncionarioVo funcionarioVo) {
+		
+			try {
+				dao.deleteFuncionario(funcionarioVo);
+			} catch (Exception e) {
+				throw new BusinessException("Nao foi possivel deletar o funcionário do registro");
+			}
+			
+		}	
+		
 	public List<FuncionarioVo> filtrarFuncionarios(FuncionarioFilter filter){
 		List<FuncionarioVo> funcionarios = new ArrayList<>();
 		
