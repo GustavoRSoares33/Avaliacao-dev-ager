@@ -150,4 +150,37 @@ public class AgendaDao extends Dao{
 		return null;
 	}
 	
+	public List<AgendaVo> findByPeriodo(String codigoPeriodo) {
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_agenda nome, periodo_disponivel periodo FROM agenda")
+										.append(" WHERE periodo_disponivel = ?");
+		
+		try(
+			Connection con = getConexao();
+			PreparedStatement ps = con.prepareStatement(query.toString())){
+			
+			int i = 1;
+			
+			ps.setInt(i, Integer.parseInt(codigoPeriodo));
+			
+			try(ResultSet rs = ps.executeQuery()){
+				AgendaVo vo = null;
+				List<AgendaVo> agendas = new ArrayList<>();
+				while(rs.next()) {
+					vo = new AgendaVo();
+					vo.setRowid(rs.getString("id"));
+					vo.setNome(rs.getString("nome"));
+					vo.setPeriodoDisponivel(PeriodoDisponivel.buscarPorCodigo(rs.getString("periodo")));
+					
+					agendas.add(vo);
+				}
+				return agendas;
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+		
+	}
+	
 }

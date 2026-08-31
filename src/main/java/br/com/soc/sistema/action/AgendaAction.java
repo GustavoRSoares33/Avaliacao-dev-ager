@@ -1,10 +1,13 @@
 package br.com.soc.sistema.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.soc.sistema.business.AgendaBusiness;
+import br.com.soc.sistema.filter.AgendaFilter;
 import br.com.soc.sistema.infra.Action;
+import br.com.soc.sistema.infra.OpcoesComboBuscar;
 import br.com.soc.sistema.infra.PeriodoDisponivel;
 import br.com.soc.sistema.vo.AgendaVo;
 
@@ -13,6 +16,7 @@ public class AgendaAction extends Action{
 	private List<AgendaVo> agendas = new ArrayList<>();
 	private AgendaBusiness business = new AgendaBusiness();
 	private AgendaVo agendaVo = new AgendaVo();
+	private AgendaFilter filtrar = new AgendaFilter();
 	
 	public String todas() {
 		agendas.addAll(business.trazerTodasAsAgendas());
@@ -73,6 +77,19 @@ public class AgendaAction extends Action{
 		return REDIRECT;
 	}
 
+	public String filtrar() {
+		if(filtrar.isNullOpcoesCombo()) {
+			return REDIRECT;
+		}
+		
+		try {
+			agendas = business.filtrarAgendas(filtrar);
+		}catch (Exception e) {
+			addActionError(e.getMessage());
+		}
+		return SUCCESS;
+	}
+	
 	public PeriodoDisponivel[] getListaPeriodos() {
 	    return PeriodoDisponivel.values();
 	}
@@ -93,4 +110,15 @@ public class AgendaAction extends Action{
 		this.agendas = agendas;
 	}
 	
+	public List<OpcoesComboBuscar> getListaOpcoesCombo(){
+		return Arrays.asList(OpcoesComboBuscar.values());
+	}
+	
+	public AgendaFilter getFiltrar() {
+		return filtrar;
+	}
+	
+	public void setFiltrar(AgendaFilter filtrar) {
+		this.filtrar = filtrar;
+	}
 }

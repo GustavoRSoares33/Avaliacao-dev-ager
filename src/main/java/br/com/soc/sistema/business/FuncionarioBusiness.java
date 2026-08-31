@@ -64,13 +64,21 @@ public class FuncionarioBusiness {
 			case ID:
 				try {
 					Integer codigo = Integer.parseInt(filter.getValorBusca());
-					funcionarios.add(dao.findByCodigo(codigo));
+					FuncionarioVo vo = dao.findByCodigo(codigo);
+					
+					if(vo != null) {
+						funcionarios.add(vo);
+					}
+					
 				}catch (NumberFormatException e) {
-					throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
+					throw new BusinessException("ID não encontrado!");
 				}
 			break;
 
 			case NOME:
+				if(filter.getValorBusca().isEmpty()) {
+					throw new BusinessException("Nome não encontrado!");
+				}
 				funcionarios.addAll(dao.findAllByNome(filter.getValorBusca()));
 			break;
 		}

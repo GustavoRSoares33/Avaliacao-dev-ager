@@ -10,7 +10,56 @@
 	<body class="bg-secondary">	
 		<div class="container">
 			<jsp:include page="/navbar/navbar.jsp" />
-
+			<div class="row mt-5 mb-2">
+				<div class="col-sm p-0">
+					<s:if test="hasActionErrors()">
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<s:iterator value="actionErrors">
+								<strong>Atenção:</strong> <s:property/><br/>
+						     </s:iterator>
+						     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					</s:if>
+					<s:form action="/filtrarAgendas.action">
+						<div class="input-group">
+							<span class="input-group-text">
+								<strong><s:text name="label.buscar.por"/></strong>
+							</span>	
+								<s:select  
+						            cssClass="form-select" 
+						            id="tipoFiltro"
+						            name="filtrar.opcoesCombo" 
+						            list="listaOpcoesCombo"  
+						            headerKey=""  
+						            headerValue="Escolha..." 
+						            listKey="%{codigo}" 
+						            listValueKey="%{descricao}"
+						            value="filtrar.opcoesCombo.codigo"	
+						            onchange="alternarCamposBusca(true)"								
+						        />
+								
+								<s:textfield cssClass="form-control" id="campoTexto" name="filtrar.valorBusca"/>
+								
+								<s:select  
+						            cssClass="form-select d-none" 
+						            id="campoSelect"
+						            name="filtrar.valorBusca" 
+						            list="listaPeriodos"  
+						            headerKey=""  
+						            headerValue="Selecione..." 
+						            listKey="codigo" 
+						            listValue="descricao"
+						            disabled="true"									
+						        />
+						        
+							<button class="btn btn-primary" type="submit"><s:text name="label.pesquisar"/></button>
+							<s:url action="todasAgendas" var="urlLimpar"/>
+        					<a href="${urlLimpar}" class="btn btn-dark">Limpar</a>
+						</div>
+					</s:form>			
+				</div>
+			</div>
+			
 			<div class="row">
 				<table class="table table-light table-striped align-middle">
 					<thead>
@@ -101,6 +150,37 @@
 		        
 		        btnSim.href = 'excluirAgendas.action?agendaVo.rowid=' + idAgenda;
 		    }
+
+		    function alternarCamposBusca(limparCampos) {
+		        var tipoFiltro = document.getElementById("tipoFiltro").value;
+		        var campoTexto = document.getElementById("campoTexto");
+		        var campoSelect = document.getElementById("campoSelect");
+
+		        if (tipoFiltro === "3") {
+		            campoTexto.classList.add("d-none");
+		            campoTexto.disabled = true;
+
+		            campoSelect.classList.remove("d-none");
+		            campoSelect.disabled = false;
+		        } else {
+		            campoSelect.classList.add("d-none");
+		            campoSelect.disabled = true;
+
+		            campoTexto.classList.remove("d-none");
+		            campoTexto.disabled = false;
+
+		        }
+
+		        if (limparCampos) {
+		            campoTexto.value = "";
+		            campoSelect.value = "";
+		        }
+		    }
+
+		    document.addEventListener("DOMContentLoaded", function() {
+		        alternarCamposBusca(false);
+		    });
+		    
 		</script>
 	</body>
 </html>

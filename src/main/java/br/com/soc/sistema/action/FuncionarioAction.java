@@ -27,7 +27,11 @@ public class FuncionarioAction extends Action {
 		if(filtrar.isNullOpcoesCombo())
 			return REDIRECT;
 		
-		funcionarios = business.filtrarFuncionarios(filtrar);
+		try {
+			funcionarios = business.filtrarFuncionarios(filtrar);
+		}catch (Exception e) {
+			addActionError(e.getMessage());
+		}
 		
 		return SUCCESS;
 	}
@@ -88,7 +92,7 @@ public class FuncionarioAction extends Action {
 	}
 	
 	public List<OpcoesComboBuscar> getListaOpcoesCombo(){
-		return Arrays.asList(OpcoesComboBuscar.values());
+		return Arrays.asList(OpcoesComboBuscar.ID, OpcoesComboBuscar.NOME);
 	}
 	
 	public List<FuncionarioVo> getFuncionarios() {

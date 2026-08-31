@@ -1,9 +1,11 @@
 package br.com.soc.sistema.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.soc.sistema.dao.AgendaDao;
 import br.com.soc.sistema.exception.BusinessException;
+import br.com.soc.sistema.filter.AgendaFilter;
 import br.com.soc.sistema.vo.AgendaVo;
 
 public class AgendaBusiness {
@@ -73,6 +75,45 @@ public class AgendaBusiness {
 		}catch (Exception e) {
 			throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
 		}
+	}
+	
+	public List<AgendaVo> filtrarAgendas(AgendaFilter filter){
+		List<AgendaVo> agendas = new ArrayList<>();
+		
+		switch (filter.getOpcoesCombo()) {
+			case ID:
+				try {
+					Integer codigo = Integer.parseInt(filter.getValorBusca());
+					AgendaVo vo = dao.findByCodigo(codigo);
+					
+					if(vo != null) {
+						agendas.add(vo);
+					}
+					
+				}catch (NumberFormatException e) {
+					throw new BusinessException("ID não encontrado!");
+				}
+			break;
+			
+			case NOME:
+				if(filter.getValorBusca().isEmpty()) {
+					throw new BusinessException("Nome não encontrado!");
+				}
+				
+				agendas.addAll(dao.findAllByNome(filter.getValorBusca()));
+			break;
+			
+			case PERIODO:
+				if(filter.getValorBusca().isEmpty()) {
+					throw new BusinessException("Selecione um período para buscar!");
+				}
+				
+				agendas.addAll(dao.findByPeriodo(filter.getValorBusca()));
+			
+		}
+		
+		return agendas;
+		
 	}
 	
 }

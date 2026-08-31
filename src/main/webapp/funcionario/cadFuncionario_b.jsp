@@ -12,6 +12,14 @@
 			<jsp:include page="/navbar/navbar.jsp" />
 			<div class="row mt-5 mb-2">
 				<div class="col-sm p-0">
+				<s:if test="hasActionErrors()">
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<s:iterator value="actionErrors">
+								<strong>Atenção:</strong> <s:property/><br/>
+						     </s:iterator>
+						     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					</s:if>
 					<s:form action="/filtrarFuncionarios.action">
 						<div class="input-group">
 							<span class="input-group-text">
@@ -30,6 +38,8 @@
 								
 								<s:textfield cssClass="form-control" id="nome" name="filtrar.valorBusca"/>
 								<button class="btn btn-primary" type="submit"><s:text name="label.pesquisar"/></button>
+								<s:url action="todosFuncionarios" var="urlLimpar"/>
+        						<a href="${urlLimpar}" class="btn btn-dark">Limpar</a>
 						</div>
 					</s:form>			
 				</div>				
