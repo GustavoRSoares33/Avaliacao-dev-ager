@@ -12,11 +12,11 @@ import org.h2.mvstore.OffHeapStore;
 
 import br.com.soc.sistema.exception.TechnicalException;
 import br.com.soc.sistema.infra.PeriodoDisponivel;
-import br.com.soc.sistema.vo.AgendaVO;
+import br.com.soc.sistema.vo.AgendaVo;
 
-public class AgendaDAO extends Dao{
+public class AgendaDao extends Dao{
 
-	public void insertAgenda(AgendaVO agendaVO) {
+	public void insertAgenda(AgendaVo agendaVO) {
 		StringBuilder query = new StringBuilder("INSERT INTO agenda (nm_agenda, periodo_disponivel) VALUES (?, ?)");
 		try(
 			Connection con = getConexao();
@@ -33,7 +33,7 @@ public class AgendaDAO extends Dao{
 		}		
 	}
 	
-	public void updateAgenda(AgendaVO agendaVO) {
+	public void updateAgenda(AgendaVo agendaVO) {
 		StringBuilder query = new StringBuilder("UPDATE agenda SET nm_agenda = ?, periodo_disponivel = ? WHERE rowid = ?");
 		try(
 			Connection con = getConexao();
@@ -51,7 +51,7 @@ public class AgendaDAO extends Dao{
 		}		
 	}
 	
-	public void deleteAgenda(AgendaVO agendaVO) {
+	public void deleteAgenda(AgendaVo agendaVO) {
 		StringBuilder query = new StringBuilder("DELETE FROM agenda WHERE rowid = ?");
 		try(
 			Connection con = getConexao();
@@ -67,18 +67,18 @@ public class AgendaDAO extends Dao{
 		}		
 	}
 	
-	public List<AgendaVO> findAllAgenda(){
+	public List<AgendaVo> findAllAgenda(){
 		StringBuilder query = new StringBuilder("SELECT rowid id, nm_agenda nome, periodo_disponivel periodo FROM agenda");
 		try(
 			Connection con = getConexao();
 			PreparedStatement ps = con.prepareStatement(query.toString());
 			ResultSet rs = ps.executeQuery()){
 			
-			AgendaVO vo = null;
-			List<AgendaVO> agendas = new ArrayList<>();
+			AgendaVo vo = null;
+			List<AgendaVo> agendas = new ArrayList<>();
 			
 			while(rs.next()) {
-				vo = new AgendaVO();
+				vo = new AgendaVo();
 				vo.setRowid(rs.getString("id"));
 				vo.setNome(rs.getString("nome"));
 				vo.setPeriodoDisponivel(PeriodoDisponivel.buscarPorCodigo(rs.getString("periodo")));
@@ -92,7 +92,7 @@ public class AgendaDAO extends Dao{
 		return Collections.emptyList();
 	}
 	
-	public List<AgendaVO> findAllByNome(String nome){
+	public List<AgendaVo> findAllByNome(String nome){
 		StringBuilder query = new StringBuilder("SELECT rowid id, nm_agenda nome, periodo_disponivel periodo FROM agenda")
 									.append(" WHERE lower(nm_agenda) like lower(?)");
 		try(
@@ -104,11 +104,11 @@ public class AgendaDAO extends Dao{
 			ps.setString(i, "%"+nome+"%");
 			
 			try(ResultSet rs = ps.executeQuery()){
-				AgendaVO vo = null;
-				List<AgendaVO> agendas = new ArrayList<>();
+				AgendaVo vo = null;
+				List<AgendaVo> agendas = new ArrayList<>();
 				
 				while(rs.next()) {
-					vo = new AgendaVO();
+					vo = new AgendaVo();
 					vo.setRowid(rs.getString("id"));
 					vo.setNome(rs.getString("nome"));
 					vo.setPeriodoDisponivel(PeriodoDisponivel.buscarPorCodigo(rs.getString("periodo")));
@@ -123,7 +123,7 @@ public class AgendaDAO extends Dao{
 		return Collections.emptyList();
 	}
 	
-	public AgendaVO findByCodigo(Integer codigo){
+	public AgendaVo findByCodigo(Integer codigo){
 		StringBuilder query = new StringBuilder("SELECT rowid id, nm_agenda nome, periodo_disponivel periodo FROM agenda")
 				.						append(" WHERE rowid = ?");
 		try(
@@ -135,9 +135,9 @@ public class AgendaDAO extends Dao{
 			ps.setInt(i, codigo);
 			
 			try(ResultSet rs = ps.executeQuery()){
-				AgendaVO vo = null;
+				AgendaVo vo = null;
 				while(rs.next()) {
-					vo = new AgendaVO();
+					vo = new AgendaVo();
 					vo.setRowid(rs.getString("id"));
 					vo.setNome(rs.getString("nome"));
 					vo.setPeriodoDisponivel(PeriodoDisponivel.buscarPorCodigo(rs.getString("periodo")));

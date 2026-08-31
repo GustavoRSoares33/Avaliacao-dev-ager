@@ -9,7 +9,7 @@
 	</head>
 	<body class="bg-secondary">	
 		<div class="container">
-			<jsp:include page="./navbar.jsp" />
+			<jsp:include page="/navbar/navbar.jsp" />
 			<div class="row mt-5 mb-2">
 				<div class="col-sm p-0">
 					<s:form action="/filtrarFuncionarios.action">

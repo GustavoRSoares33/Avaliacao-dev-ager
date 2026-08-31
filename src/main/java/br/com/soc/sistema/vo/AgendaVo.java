@@ -2,14 +2,14 @@ package br.com.soc.sistema.vo;
 
 import br.com.soc.sistema.infra.PeriodoDisponivel;
 
-public class AgendaVO {
+public class AgendaVo {
 
 	private String rowid;
 	private String nome;
 	
 	private PeriodoDisponivel periodoDisponivel;
 	
-	public AgendaVO() {}
+	public AgendaVo() {}
 	
 	public String getRowid() {
 		return rowid;
