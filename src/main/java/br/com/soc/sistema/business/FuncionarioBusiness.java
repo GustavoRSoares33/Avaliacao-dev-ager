@@ -22,10 +22,10 @@ public class FuncionarioBusiness {
 	}	
 	
 	public void salvarFuncionario(FuncionarioVo funcionarioVo) {
+		if(funcionarioVo.getNome() == null || funcionarioVo.getNome().trim().isEmpty())
+			throw new IllegalArgumentException("Nome nao pode ser em branco");
+		
 		try {
-			if(funcionarioVo.getNome().isEmpty())
-				throw new IllegalArgumentException("Nome nao pode ser em branco");
-			
 			dao.insertFuncionario(funcionarioVo);
 		} catch (Exception e) {
 			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");

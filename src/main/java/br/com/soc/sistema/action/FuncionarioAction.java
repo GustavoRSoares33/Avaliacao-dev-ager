@@ -36,9 +36,14 @@ public class FuncionarioAction extends Action {
 		if(funcionarioVo.getNome() == null)
 			return INPUT;
 		
-		business.salvarFuncionario(funcionarioVo);
-		
-		return REDIRECT;
+		try {
+			business.salvarFuncionario(funcionarioVo);
+			
+			return REDIRECT;
+		}catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+			return INPUT;
+		}
 	}
 	
 	public String editar() {
@@ -46,9 +51,14 @@ public class FuncionarioAction extends Action {
 	        return REDIRECT;
 	    }
 	    
-	    funcionarioVo = business.buscarFuncionarioPor(funcionarioVo.getRowid());
-	    
-	    return "editarFuncionario"; 
+	    try {
+		    funcionarioVo = business.buscarFuncionarioPor(funcionarioVo.getRowid());
+		    
+		    return "editarFuncionario";
+	    }catch (IllegalArgumentException e) {
+	    	addActionError(e.getMessage());
+			return "editarFuncionario";
+		}
 	}
 
 	public String alterar() {
@@ -56,9 +66,14 @@ public class FuncionarioAction extends Action {
 	        return REDIRECT;
 	    }
 	    
-	    business.alterarFuncionario(funcionarioVo);
-	    
-	    return REDIRECT; 
+	    try {
+		    business.alterarFuncionario(funcionarioVo);
+		    
+		    return REDIRECT;
+	    }catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+			return "editarFuncionario";
+		}
 	}
 	
 	public String excluir() {

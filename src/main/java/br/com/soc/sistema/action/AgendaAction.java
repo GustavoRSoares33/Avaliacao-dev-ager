@@ -21,12 +21,56 @@ public class AgendaAction extends Action{
 	}
 	
 	public String novo() {
-	    if(agendaVo.getNome() == null) {
+	    if(agendaVo.getNome() == null && agendaVo.getPeriodoDisponivel() == null) {
 	        return INPUT;
 	    }
 	    
-	    business.salvarAgenda(agendaVo);
-	    return REDIRECT;
+	    try {
+		    business.salvarAgenda(agendaVo);
+		    return REDIRECT;
+	    }catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+			return INPUT;
+		}
+	}
+	
+	public String editar() {
+		if(agendaVo == null || agendaVo.getRowid() == null) {
+			return REDIRECT;
+		}
+		
+		try {
+			agendaVo = business.buscarAgendaPor(agendaVo.getRowid());
+			return "editarAgenda";
+		}catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+			return "editarAgenda";
+		}
+		
+	}
+	
+	public String alterar() {
+		if(agendaVo == null || agendaVo.getRowid() == null) {
+			return REDIRECT;
+		}
+		
+		try {
+			business.editarAgenda(agendaVo);
+			return REDIRECT;
+		}catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+			return "editarAgenda";
+		}
+		
+	}
+	
+	public String excluir() {
+		if(agendaVo == null || agendaVo.getRowid() == null) {
+			return REDIRECT;
+		}
+		
+		business.deletarAgenda(agendaVo);
+		return REDIRECT;
 	}
 
 	public PeriodoDisponivel[] getListaPeriodos() {

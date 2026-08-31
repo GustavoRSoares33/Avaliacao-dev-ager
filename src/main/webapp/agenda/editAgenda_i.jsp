@@ -10,7 +10,7 @@
 	<body class="bg-secondary">
 
 		<div class="container">
-			<s:form action="/novoAgendas.action">
+			<s:form action="/alterarAgendas.action">
 
 				<div class="card mt-5">
 					<div class="card-header">
@@ -64,7 +64,7 @@
 						        <s:select 
 						            cssClass="form-select" 
 						            id="periodo" 
-						            name="agendaVo.periodoDisponivel" 
+						            name="AgendaVo.periodoDisponivel" 
 						            list="listaPeriodos" 
 						            listKey="name()" 
 						            listValue="descricao" 

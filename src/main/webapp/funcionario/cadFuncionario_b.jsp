@@ -59,7 +59,7 @@
 										<s:text name="label.editar"/>
 									</a>
 
-									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" onclick="prepararExclusao('${rowid}')">
+									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" onclick="excluirFuncionario('${rowid}')">
 									    <s:text name="label.excluir"/>
 									</a>
 								</td>
@@ -117,7 +117,7 @@
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 		
 		<script>
-		    function prepararExclusao(idFuncionario) {
+		    function excluirFuncionario(idFuncionario) {
 
 		        var btnSim = document.getElementById('btnSimExcluir');
 		        

@@ -22,6 +22,7 @@
         <action name="*Agendas" class="br.com.soc.sistema.action.AgendaAction" method="{1}">
         	<result name="success">/agenda/cadAgenda_b.jsp</result>
         	<result name="input">/agenda/cadAgenda_i.jsp</result>
+        	<result name="editarAgenda">/agenda/editAgenda_i.jsp</result>
         	<result name="redirect" type="redirectAction">todasAgendas</result>
         </action>
     </package>

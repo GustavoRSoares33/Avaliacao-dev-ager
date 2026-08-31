@@ -29,15 +29,15 @@
 								<td>${nome}</td>
 								<td>${periodoDisponivel.descricao}</td>
 								<td class="text-end">
-									<s:url action="editarAgenda" var="editar">
-										<s:param name="AgendaVo.rowid" value="rowid"></s:param>
+									<s:url action="editarAgendas" var="editar">
+										<s:param name="agendaVo.rowid" value="rowid"></s:param>
 									</s:url>
 
 									<a href="${editar}" class="btn btn-warning text-white">
 										<s:text name="label.editar"/>
 									</a>
 
-									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" onclick="prepararExclusao('${rowid}')">
+									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" onclick="excluirAgenda('${rowid}')">
 									    <s:text name="label.excluir"/>
 									</a>
 								</td>
@@ -95,11 +95,11 @@
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 		
 		<script>
-		    function prepararExclusao(idFuncionario) {
+		    function excluirAgenda(idAgenda) {
 
 		        var btnSim = document.getElementById('btnSimExcluir');
 		        
-		        btnSim.href = 'excluirFuncionarios.action?funcionarioVo.rowid=' + idFuncionario;
+		        btnSim.href = 'excluirAgendas.action?agendaVo.rowid=' + idAgenda;
 		    }
 		</script>
 	</body>

@@ -27,6 +27,14 @@
 					</div>
 					
 					<div class="card-body">
+						<s:if test="hasActionErrors()">
+						        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+						            <s:iterator value="actionErrors">
+						                <strong>Atenção:</strong> <s:property/><br/>
+						            </s:iterator>
+						            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						        </div>
+						    </s:if>
 						<div class="row align-items-center">
 							<label for="id" class="col-sm-1 col-form-label text-center">
 								Código:
