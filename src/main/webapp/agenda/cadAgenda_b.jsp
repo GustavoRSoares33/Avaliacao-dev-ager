@@ -78,6 +78,14 @@
 								<td>${nome}</td>
 								<td>${periodoDisponivel.descricao}</td>
 								<td class="text-end">
+									<s:url action="detalhesAgendas" var="abrir">
+										<s:param name="agendaVo.rowid" value="rowid"></s:param>
+									</s:url>
+									
+									<a href="${abrir}" class="btn btn-primary text-white">
+										<s:text name="label.abrir"/>
+									</a>
+									
 									<s:url action="editarAgendas" var="editar">
 										<s:param name="agendaVo.rowid" value="rowid"></s:param>
 									</s:url>

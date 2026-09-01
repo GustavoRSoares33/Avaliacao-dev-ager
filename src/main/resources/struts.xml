@@ -23,7 +23,26 @@
         	<result name="success">/agenda/cadAgenda_b.jsp</result>
         	<result name="input">/agenda/cadAgenda_i.jsp</result>
         	<result name="editarAgenda">/agenda/editAgenda_i.jsp</result>
+        	<result name="detalhes">/agenda/abrirAgenda_i.jsp</result>
         	<result name="redirect" type="redirectAction">todasAgendas</result>
+        </action>
+        
+        <action name="*Compromissos" class="br.com.soc.sistema.action.CompromissoAction" method="{1}">
+        	<result name="success">/compromisso/cadCompromisso_b.jsp</result>
+        	<result name="input">/compromisso/cadCompromisso_i.jsp</result>
+        	<result name="editarCompromisso">/compromisso/editCompromisso_i.jsp</result>
+        	<result name="redirect" type="redirectAction">todosCompromissos</result>
+        </action>
+        
+        <action name="gravarCompromissoContexto" class="br.com.soc.sistema.action.CompromissoAction" method="gravarContexto">
+            <result name="success" type="redirectAction">
+                <param name="actionName">detalhesAgendas</param>
+                <param name="agendaVo.rowid">${compromissoVo.agenda.rowid}</param>
+            </result>
+            
+            <result name="input">/agenda/abrirAgenda_i.jsp</result>
+            
+            <result name="detalhes">/agenda/abrirAgenda_i.jsp</result>
         </action>
     </package>
 

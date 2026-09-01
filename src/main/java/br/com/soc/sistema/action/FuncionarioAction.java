@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.soc.sistema.business.CompromissoBusiness;
 import br.com.soc.sistema.business.FuncionarioBusiness;
 import br.com.soc.sistema.filter.FuncionarioFilter;
 import br.com.soc.sistema.infra.Action;
@@ -14,6 +15,7 @@ public class FuncionarioAction extends Action {
 	
 	private List<FuncionarioVo> funcionarios = new ArrayList<>();
 	private FuncionarioBusiness business = new FuncionarioBusiness();
+	private CompromissoBusiness compromissoBusiness = new CompromissoBusiness();
 	private FuncionarioFilter filtrar = new FuncionarioFilter();
 	private FuncionarioVo funcionarioVo = new FuncionarioVo();
 	
@@ -86,6 +88,7 @@ public class FuncionarioAction extends Action {
 			return REDIRECT;
 		}
 		
+		compromissoBusiness.excluirPorFuncionario(funcionarioVo.getRowid());
 		business.deletarFuncionario(funcionarioVo);
 		
 		return REDIRECT;

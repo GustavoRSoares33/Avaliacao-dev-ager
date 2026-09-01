@@ -18,6 +18,10 @@
           <s:url action="todasAgendas" var="linkAgendas"/>
           <a class="nav-link" href="${linkAgendas}">Agendas</a>
         </li>
+        <li class="nav-item">
+          <s:url action="todosCompromissos" var="linkCompromissos"/>
+          <a class="nav-link" href="${linkCompromissos}">Compromissos</a>
+        </li>
       </ul>
     </div>
   </div>
