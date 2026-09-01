@@ -229,19 +229,23 @@ public class CompromissoDao extends Dao{
 	        try(ResultSet rs = ps.executeQuery()) {
 	            List<CompromissoVo> lista = new ArrayList<>();
 	            
+	            CompromissoVo vo = null;
+	            FuncionarioVo funcionario = null;
+	            AgendaVo agenda = null;
+	            
 	            while(rs.next()){
-	                CompromissoVo vo = new CompromissoVo();
+	                vo = new CompromissoVo();
 	                vo.setRowid(rs.getString("id_compromisso"));
 	                vo.setNome(rs.getString("nome_compromisso"));
 	                vo.setDataCompromisso(rs.getDate("data_compromisso"));
 	                vo.setHoraCompromisso(rs.getTime("hora_compromisso"));
 	                
-	                FuncionarioVo funcionario = new FuncionarioVo();
+	                funcionario = new FuncionarioVo();
 	                funcionario.setRowid(rs.getString("id_funcionario"));
 	                funcionario.setNome(rs.getString("nome_funcionario") != null ? rs.getString("nome_funcionario") : "Não atribuído");
 	                vo.setFuncionario(funcionario);
 	                
-	                AgendaVo agenda = new AgendaVo();
+	                agenda = new AgendaVo();
 	                agenda.setRowid(rs.getString("id_agenda"));
 	                agenda.setNome(rs.getString("nome_agenda") != null ? rs.getString("nome_agenda") : "Não atribuída");
 	                vo.setAgenda(agenda);
