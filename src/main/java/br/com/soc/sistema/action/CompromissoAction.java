@@ -91,6 +91,48 @@ public class CompromissoAction extends Action{
 		return INPUT;
 	}
 	
+	public String editar() {
+		if(compromissoVo == null || compromissoVo.getRowid() == null) {
+			return REDIRECT;
+		}
+		
+		try {
+			compromissoVo = business.buscarCompromissoPor(compromissoVo.getRowid());
+			carregarListas();
+			
+			if (compromissoVo.getDataCompromisso() != null) {
+				dataDigitada = compromissoVo.getDataCompromisso().toString();
+			}
+			if (compromissoVo.getHoraCompromisso() != null) {
+				horaDigitada = compromissoVo.getHoraCompromisso().toString().substring(0, 5);
+			}
+			
+			return "editarCompromisso";
+		}catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+			return "editarCompromisso";
+		}
+		
+	}
+	
+	public String alterar() {
+		if(compromissoVo == null || compromissoVo.getRowid() == null) {
+			return REDIRECT;
+		}
+		
+		try {
+			limparCampos();
+			converterDataEHora();
+			
+			business.alterarCompromisso(compromissoVo);
+			return REDIRECT;
+		}catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+			carregarListas();
+			return "editarCompromisso";
+		}
+	}
+	
 	private void carregarListas() {
 		AgendaBusiness agendaBusiness = new AgendaBusiness();
 		FuncionarioBusiness funcionarioBusiness = new FuncionarioBusiness();

@@ -40,6 +40,8 @@ public class CompromissoBusiness {
 			throw new IllegalArgumentException("Nome nao pode ser em branco");
 		}
 		
+		validarDisponibilidadeAgenda(compromisso);
+		
 		try {
 			dao.updateCompromisso(compromisso);
 		}catch (Exception e) {

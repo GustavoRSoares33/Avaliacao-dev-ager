@@ -10,7 +10,7 @@
 	<body class="bg-secondary">
 
 		<div class="container">
-			<s:form action="/novoCompromissos.action">
+			<s:form action="/alterarCompromissos.action">
 
 				<div class="card mt-5">
 					<div class="card-header">
