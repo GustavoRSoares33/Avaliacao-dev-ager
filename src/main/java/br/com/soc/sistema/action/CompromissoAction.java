@@ -53,6 +53,7 @@ public class CompromissoAction extends Action{
 							
 							compromissoVo.setAgenda(null);
 						}
+				limparCampos();
 				converterDataEHora();
 				business.novoCompromisso(compromissoVo);
 				return REDIRECT;
@@ -63,22 +64,28 @@ public class CompromissoAction extends Action{
 				return INPUT;
 			}
 		}else if("telaAgenda".equals(telaAtual)) {
+			String idDaAgenda = compromissoVo.getAgenda().getRowid();
 			try {
+				limparCampos();
 				converterDataEHora();
 				business.salvarCompromisso(compromissoVo);
-				return "detalhes";
+				
+				carregarAgenda(idDaAgenda);
+				
+				compromissoVo = new CompromissoVo();
+				AgendaVo agenda = new AgendaVo();
+				agenda.setRowid(idDaAgenda);
+				compromissoVo.setAgenda(agenda);
+				
+				dataDigitada = null;
+				horaDigitada = null;
+				
+				return "abrirAgenda";
 				
 			} catch (IllegalArgumentException e) {
 				addActionError(e.getMessage());
-				
-				AgendaBusiness agendaBusiness = new AgendaBusiness();
-				FuncionarioBusiness funcBusiness = new FuncionarioBusiness();
-				
-				agendaVo = agendaBusiness.buscarAgendaPor(compromissoVo.getAgenda().getRowid());
-				funcionarios.addAll(funcBusiness.trazerTodosOsFuncionarios());
-				setCompromissos(business.buscarPorAgenda(compromissoVo.getAgenda().getRowid()));
-				
-				return "detalhes";
+				carregarAgenda(idDaAgenda);
+				return "abrirAgenda";
 			}
 		}
 		return INPUT;
@@ -86,11 +93,35 @@ public class CompromissoAction extends Action{
 	
 	private void carregarListas() {
 		AgendaBusiness agendaBusiness = new AgendaBusiness();
-		FuncionarioBusiness funcBusiness = new FuncionarioBusiness();
+		FuncionarioBusiness funcionarioBusiness = new FuncionarioBusiness();
 		agendas.clear();
 		funcionarios.clear();
 		agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
-		funcionarios.addAll(funcBusiness.trazerTodosOsFuncionarios());
+		funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+	}
+	
+	private void carregarAgenda(String idAgenda) {
+		AgendaBusiness agendaBusiness = new AgendaBusiness();
+		FuncionarioBusiness funcionarioBusiness = new FuncionarioBusiness();
+		
+		this.agendaVo = agendaBusiness.buscarAgendaPor(idAgenda);
+		
+		funcionarios.clear();
+		funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+		
+		compromissos.clear();
+		compromissos.addAll(business.buscarPorAgenda(idAgenda));
+	}
+	
+	private void limparCampos() {
+		if (compromissoVo.getAgenda() != null && 
+		   (compromissoVo.getAgenda().getRowid() == null || compromissoVo.getAgenda().getRowid().trim().isEmpty())) {
+			compromissoVo.setAgenda(null);
+		}
+		if (compromissoVo.getFuncionario() != null && 
+		   (compromissoVo.getFuncionario().getRowid() == null || compromissoVo.getFuncionario().getRowid().trim().isEmpty())) {
+			compromissoVo.setFuncionario(null);
+		}
 	}
 
 	private void converterDataEHora() {
