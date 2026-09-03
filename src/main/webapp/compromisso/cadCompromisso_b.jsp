@@ -70,8 +70,9 @@
 					<tfoot class="table-secondary">
 						<tr>
 							<td colspan="7">
-								<s:url action="novoCompromissos" var="novo"/>
-								
+								<s:url action="novoCompromissos" var="novo">
+									<s:param name="telaAtual" value="'telaCrud'"></s:param>
+								</s:url>
 								<a href="${novo}" class="btn btn-success">
 									<s:text name="label.novo"/>
 								</a>

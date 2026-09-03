@@ -31,6 +31,7 @@
         	<result name="success">/compromisso/cadCompromisso_b.jsp</result>
         	<result name="input">/compromisso/cadCompromisso_i.jsp</result>
         	<result name="editarCompromisso">/compromisso/editCompromisso_i.jsp</result>
+        	<result name="detalhes">/agenda/abrirAgenda_i.jsp</result>
         	<result name="redirect" type="redirectAction">todosCompromissos</result>
         </action>
         

@@ -31,6 +31,8 @@ public class CompromissoAction extends Action{
 	
 	private String dataDigitada;
 	private String horaDigitada;
+	
+	private String telaAtual;
 
 	public String todos() {
 			compromissos.addAll(business.trazerTodosCompromissos());
@@ -38,48 +40,48 @@ public class CompromissoAction extends Action{
 		}
 	
 	public String novo() {
-		if(compromissoVo.getNome() == null || compromissoVo.getNome().trim().isEmpty()) {
-			carregarListas();
-			return INPUT;
+		if("telaCrud".equals(telaAtual)) {
+			if(compromissoVo.getNome() == null) {
+				carregarListas();
+				return INPUT;
+			}
+			
+			try {
+				if (compromissoVo.getAgenda() != null && 
+						   (compromissoVo.getAgenda().getRowid() == null || 
+						   		(compromissoVo.getAgenda().getRowid().trim().isEmpty()))) {
+							
+							compromissoVo.setAgenda(null);
+						}
+				converterDataEHora();
+				business.novoCompromisso(compromissoVo);
+				return REDIRECT;
+				
+			}catch(IllegalArgumentException e) {
+				addActionError(e.getMessage());
+				carregarListas();
+				return INPUT;
+			}
+		}else if("telaAgenda".equals(telaAtual)) {
+			try {
+				converterDataEHora();
+				business.salvarCompromisso(compromissoVo);
+				return "detalhes";
+				
+			} catch (IllegalArgumentException e) {
+				addActionError(e.getMessage());
+				
+				AgendaBusiness agendaBusiness = new AgendaBusiness();
+				FuncionarioBusiness funcBusiness = new FuncionarioBusiness();
+				
+				agendaVo = agendaBusiness.buscarAgendaPor(compromissoVo.getAgenda().getRowid());
+				funcionarios.addAll(funcBusiness.trazerTodosOsFuncionarios());
+				setCompromissos(business.buscarPorAgenda(compromissoVo.getAgenda().getRowid()));
+				
+				return "detalhes";
+			}
 		}
-		
-		try {
-			if (compromissoVo.getAgenda() != null && 
-					   (compromissoVo.getAgenda().getRowid() == null || compromissoVo.getAgenda().getRowid().trim().isEmpty())) {
-						
-						compromissoVo.setAgenda(null);
-					}
-			
-			converterDataEHora();
-			business.novoCompromisso(compromissoVo);
-			return REDIRECT;
-		}catch(IllegalArgumentException e) {
-			addActionError(e.getMessage());
-			carregarListas();
-			return INPUT;
-		}
-		
-	}
-	
-	public String gravarContexto() {
-		try {
-			business.salvarCompromisso(compromissoVo);
-			return SUCCESS;
-		
-		} catch (IllegalArgumentException e) {
-		
-			addActionError(e.getMessage());
-			
-			AgendaBusiness agendaBusiness = new AgendaBusiness();
-			FuncionarioBusiness funcBusiness = new FuncionarioBusiness();
-			
-			agendaVo.setNome(agendaBusiness.buscarAgendaPor(compromissoVo.getAgenda().getRowid()).getNome());
-			funcionarios.addAll(funcBusiness.trazerTodosOsFuncionarios());
-			
-			setCompromissos(business.buscarPorAgenda(compromissoVo.getAgenda().getRowid()));
-		
-			return "detalhes";
-		}
+		return INPUT;
 	}
 	
 	private void carregarListas() {
@@ -128,6 +130,13 @@ public class CompromissoAction extends Action{
 		this.compromissoVo = compromissoVo;
 	}
 	
+	public AgendaVo getAgendaVo() {
+		return agendaVo;
+	}
+	public void setAgendaVo(AgendaVo agendaVo) {
+		this.agendaVo = agendaVo;
+	}
+	
 	public String getDataDigitada() {
 		return dataDigitada;
 	}
@@ -140,6 +149,13 @@ public class CompromissoAction extends Action{
 	}
 	public void setHoraDigitada(String horaDigitada) {
 		this.horaDigitada = horaDigitada;
+	}
+	
+	public String getTelaAtual() {
+		return telaAtual;
+	}
+	public void setTelaAtual(String telaAtual) {
+		this.telaAtual = telaAtual;
 	}
 
 

@@ -12,6 +12,8 @@
 		<div class="container">
 			<s:form action="/novoCompromissos.action">
 
+				<input type="hidden" name="telaAtual" value="telaCrud" />
+				
 				<div class="card mt-5">
 					<div class="card-header">
 						<div class="row">
@@ -37,7 +39,6 @@
 						</s:if>
 						
 						<div class="row align-items-center">
-							<!-- Label padronizada para col-sm-2 -->
 							<label for="id" class="col-sm-2 col-form-label text-center">
 								Código:
 							</label>	
@@ -48,7 +49,6 @@
 						</div>
 						
 						<div class="row align-items-center mt-3">
-							<!-- Label padronizada para col-sm-2 -->
 							<label for="nome" class="col-sm-2 col-form-label text-center">
 								Nome:
 							</label>	
@@ -59,7 +59,6 @@
 						</div>
 
 						<div class="row align-items-center mt-3">
-							<!-- Label padronizada para col-sm-2 -->
 							<label class="col-sm-2 col-form-label text-center">
 								Agenda:
 							</label>	
@@ -78,7 +77,6 @@
 						</div>
 
 						<div class="row align-items-center mt-3">
-							<!-- Label padronizada para col-sm-2 -->
 							<label class="col-sm-2 col-form-label text-center">
 								Funcionário:
 							</label>	
@@ -97,7 +95,6 @@
 						</div>
 
 						<div class="row align-items-center mt-3">
-							<!-- Label padronizada para col-sm-2 -->
 							<label class="col-sm-2 col-form-label text-center">
 								Data:
 							</label>	
@@ -108,7 +105,6 @@
 						</div>
 
 						<div class="row align-items-center mt-3">
-							<!-- Label padronizada para col-sm-2 -->
 							<label class="col-sm-2 col-form-label text-center">
 								Hora:
 							</label>	

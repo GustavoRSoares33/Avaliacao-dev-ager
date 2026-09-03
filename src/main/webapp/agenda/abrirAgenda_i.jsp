@@ -11,7 +11,6 @@
 		<div class="container">
 			<jsp:include page="/navbar/navbar.jsp" />
 			
-			<!-- Alertas de Erro ou Sucesso -->
 			<div class="row mt-4">
 				<div class="col-sm p-0">
 					<s:if test="hasActionErrors()">
@@ -25,7 +24,6 @@
 				</div>
 			</div>
 
-			<!-- PAINEL SUPERIOR: DADOS DA AGENDA E NOVO COMPROMISSO -->
 			<div class="card shadow-sm mb-4">
 				<div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
 					<h5 class="mb-0">
@@ -37,15 +35,13 @@
 				<div class="card-body bg-light">
 					<h6 class="card-subtitle mb-3 text-muted">Agendar Novo Compromisso nesta sala:</h6>
 					
-					<!-- Formulário de Agendamento Rápido -->
-					<s:form action="/gravarCompromissoContexto.action" cssClass="row g-3 align-items-end">
-						
-						<!-- O SEGREDO: O ID da agenda vai escondido para o Java amarrar o compromisso nela automaticamente -->
+					<s:form action="/novoCompromissos.action" cssClass="row g-3 align-items-end">
+						<input type="hidden" name="telaAtual" value="telaAgenda" />
 						<s:hidden name="compromissoVo.agenda.rowid" value="%{agendaVo.rowid}" />
 						
 						<div class="col-md-3">
 							<label class="form-label fw-bold">Nome do Compromisso</label>
-							<s:textfield cssClass="form-control" name="compromissoVo.nome" placeholder="Ex: Reunião de Pauta"/>
+							<s:textfield cssClass="form-control" name="compromissoVo.nome" placeholder="Ex: Consulta médica"/>
 						</div>
 						
 						<div class="col-md-3">
@@ -63,13 +59,11 @@
 						
 						<div class="col-md-2">
 							<label class="form-label fw-bold">Data</label>
-							<!-- O type="date" faz o navegador abrir o calendário -->
 							<s:textfield type="date" cssClass="form-control" name="dataDigitada"/>
 						</div>
 						
 						<div class="col-md-2">
 							<label class="form-label fw-bold">Hora</label>
-							<!-- O type="time" faz o navegador abrir o relógio -->
 							<s:textfield type="time" cssClass="form-control" name="horaDigitada"/>
 						</div>
 						
@@ -80,7 +74,6 @@
 				</div>
 			</div>
 			
-			<!-- PAINEL INFERIOR: TABELA DE COMPROMISSOS DESTA AGENDA -->
 			<div class="row">
 				<table class="table table-light table-striped align-middle shadow-sm">
 					<thead>
@@ -118,7 +111,6 @@
 							</tr>
 						</s:iterator>
 						
-						<!-- Mensagem caso a agenda esteja vazia -->
 						<s:if test="compromissos.isEmpty()">
 							<tr>
 								<td colspan="6" class="text-center text-muted py-4">
@@ -130,17 +122,15 @@
 				</table>
 			</div>
 			
-			<!-- Botão Voltar -->
 			<div class="row mt-3 mb-5">
 				<div class="col">
 					<s:url action="todasAgendas" var="voltar"/>
-					<a href="${voltar}" class="btn btn-secondary">&larr; Voltar para Agendas</a>
+					<a href="${voltar}" class="btn btn-success">Voltar para Agendas</a>
 				</div>
 			</div>
 			
 		</div>
 		
-		<!-- Modal de Exclusão -->
 		<div  class="modal fade" id="confirmarExclusao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
