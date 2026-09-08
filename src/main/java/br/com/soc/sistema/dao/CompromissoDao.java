@@ -153,6 +153,22 @@ public class CompromissoDao extends Dao{
 		
 	}
 	
+	public void deleteCompromisso(CompromissoVo compromisso) {
+		StringBuilder query = new StringBuilder("DELETE FROM compromissos WHERE rowid = ?");
+		
+		try(Connection con = getConexao();
+			PreparedStatement ps = con.prepareStatement(query.toString());){
+			
+			int i = 1;
+			ps.setString(i, compromisso.getRowid());
+			ps.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new TechnicalException("Erro ao deletar o compromisso", e);
+		}
+	}
+	
 	public CompromissoVo findByCodigo(Integer codigo) {
 		StringBuilder query = new StringBuilder()
 				.append("SELECT ")

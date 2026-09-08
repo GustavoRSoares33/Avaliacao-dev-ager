@@ -49,6 +49,14 @@ public class CompromissoBusiness {
 		}
 	}
 	
+	public void deletarCompromisso(CompromissoVo compromissoVo) {
+		try {
+			dao.deleteCompromisso(compromissoVo);
+		}catch (Exception e) {
+			throw new BusinessException("Nao foi possivel deletar o compromisso");
+		}
+	}
+	
 	public CompromissoVo buscarCompromissoPor(String codigo) {
 		try {
 			Integer cod = Integer.parseInt(codigo);

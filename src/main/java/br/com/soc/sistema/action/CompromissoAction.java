@@ -133,6 +133,15 @@ public class CompromissoAction extends Action{
 		}
 	}
 	
+	public String excluir() {
+		if(compromissoVo == null || compromissoVo.getRowid() == null) {
+			return REDIRECT;
+		}
+		
+		business.deletarCompromisso(compromissoVo);
+		return REDIRECT;
+	}
+	
 	private void carregarListas() {
 		AgendaBusiness agendaBusiness = new AgendaBusiness();
 		FuncionarioBusiness funcionarioBusiness = new FuncionarioBusiness();
