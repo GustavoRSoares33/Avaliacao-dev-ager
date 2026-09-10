@@ -34,6 +34,11 @@
         	<result name="abrirAgenda">/agenda/abrirAgenda_i.jsp</result>
         	<result name="redirect" type="redirectAction">todosCompromissos</result>
         </action>
+        
+        <action name="*Relatorios" class="br.com.soc.sistema.action.RelatorioAction" method="{1}">
+        	<result name="success">/compromisso/cadCompromisso_b.jsp</result>
+        	<result name="redirect" type="redirectAction">GerarRelatorios</result>
+        </action>
     </package>
 
 </struts>
