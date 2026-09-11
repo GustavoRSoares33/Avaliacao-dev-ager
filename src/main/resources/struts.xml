@@ -36,8 +36,17 @@
         </action>
         
         <action name="*Relatorios" class="br.com.soc.sistema.action.RelatorioAction" method="{1}">
-        	<result name="success">/compromisso/cadCompromisso_b.jsp</result>
-        	<result name="redirect" type="redirectAction">GerarRelatorios</result>
+        	<result name="success">/relatorio/relatorio_i.jsp</result>
+        	<result name="imprimir">/relatorio/relatorio_impresso.jsp</result>
+        	
+        	<result name="excel" type="stream">
+        		<param name="contentType">application/vnd.ms-excel</param>
+        		<param name="inputName">arquivo</param>
+        		<param name="contentDisposition">attachment;filename="Relatorio.xls"</param>
+        		<param name="bufferSize">1024</param>
+        	</result>
+        	
+        	<result name="redirect" type="redirectAction">filtroRelatorios</result>
         </action>
     </package>
 

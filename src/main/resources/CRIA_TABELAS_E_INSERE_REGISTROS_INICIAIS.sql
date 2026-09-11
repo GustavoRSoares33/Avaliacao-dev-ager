@@ -27,4 +27,4 @@ VALUES
 ('Treinamento de Equipe', 2, 2, '2026-09-10', '08:30:00'),
 ('Manutenção dos Equipamentos', NULL, 3, '2026-09-12', '14:00:00'),
 ('Entrevista com Desenvolvedor', 4, NULL, '2026-09-15', '15:30:00'),
-('Revisão de Metas do Semestre', 3, NULL, NULL, NULL);
+('Revisão de Metas do Semestre', 3, NULL, '2026-09-17', '18:30:00');

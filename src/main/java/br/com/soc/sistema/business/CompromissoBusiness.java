@@ -26,6 +26,14 @@ public class CompromissoBusiness {
 			throw new IllegalArgumentException("Nome nao pode ser em branco");
 		}
 		
+		if(compromisso.getDataCompromisso() == null) {
+			throw new IllegalArgumentException("Selecione uma data para o compromisso");
+		}
+		
+		if(compromisso.getHoraCompromisso() == null) {
+			throw new IllegalArgumentException("Selecione um horário para o compromisso");
+		}
+		
 		validarDisponibilidadeAgenda(compromisso);
 		
 		try {
@@ -38,6 +46,14 @@ public class CompromissoBusiness {
 	public void alterarCompromisso(CompromissoVo compromisso) {
 		if(compromisso.getNome() == null || compromisso.getNome().trim().isEmpty()) {
 			throw new IllegalArgumentException("Nome nao pode ser em branco");
+		}
+		
+		if(compromisso.getDataCompromisso() == null) {
+			throw new IllegalArgumentException("Selecione uma data para o compromisso");
+		}
+		
+		if(compromisso.getHoraCompromisso() == null) {
+			throw new IllegalArgumentException("Selecione um horário para o compromisso");
 		}
 		
 		validarDisponibilidadeAgenda(compromisso);

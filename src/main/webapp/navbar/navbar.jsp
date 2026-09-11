@@ -22,6 +22,10 @@
           <s:url action="todosCompromissos" var="linkCompromissos"/>
           <a class="nav-link" href="${linkCompromissos}">Compromissos</a>
         </li>
+        <li class="nav-item">
+          <s:url action="filtroRelatorios" var="linkRelatorios"/>
+          <a class="nav-link" href="${linkRelatorios}">Gerar Relatório</a>
+        </li>
       </ul>
     </div>
   </div>
