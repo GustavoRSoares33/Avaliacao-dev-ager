@@ -24,18 +24,23 @@ public class RelatorioAction extends Action{
 		return SUCCESS;
 	}
 	
-	public String gerar() throws Exception {
-		Date dtInicio = null;
-		Date dtFim = null;
+	public String gerar() {
+		if (dataInicio == null || dataInicio.trim().isEmpty()
+		        || dataFim == null || dataFim.trim().isEmpty()) {
+
+		    addActionError("Informe a data inicial e a data final.");
+		    return SUCCESS;
+		}
+		
+		Date dtInicio = Date.valueOf(dataInicio);
+		Date dtFim = Date.valueOf(dataFim);
+		
+		if (dtInicio.after(dtFim)) {
+		    addActionError("A data inicial não pode ser maior que a data final.");
+		    return SUCCESS;
+		}
 		
 		try {
-			if (dataInicio != null && !dataInicio.trim().isEmpty()) {
-				dtInicio = Date.valueOf(dataInicio);
-			}
-			if (dataFim != null && !dataFim.trim().isEmpty()) {
-				dtFim = Date.valueOf(dataFim);
-			}
-			
 			relatorios = business.buscarRelatorio(dtInicio, dtFim);
 			
 			if ("excel".equals(formato)) {
@@ -49,6 +54,10 @@ public class RelatorioAction extends Action{
 		} catch (IllegalArgumentException e) {
 			addActionError("Data inválida. Por favor, verifique os campos.");
 			return SUCCESS; 
+		}catch (Exception e) {
+			e.printStackTrace();
+			addActionError("Ocorreu um erro interno ao tentar gerar o relatório: " + e.getMessage());
+			return SUCCESS;
 		}
 	}
 	
