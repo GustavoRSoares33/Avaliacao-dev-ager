@@ -8,9 +8,6 @@ public class RelatorioVo {
 	private AgendaVo agenda;
 	private CompromissoVo compromisso;
 	
-	private Date dataInicio;
-	private Date dataFim;
-	
 	public FuncionarioVo getFuncionario() {
 		return funcionario;
 	}
@@ -32,23 +29,9 @@ public class RelatorioVo {
 		this.compromisso = compromisso;
 	}
 	
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-	
-	public Date getDataFim() {
-		return dataFim;
-	}
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
-	
 	@Override
 	public String toString() {
-		return "RelatorioVo [funcionario=" + funcionario + ", agenda=" + agenda + ", compromisso=" + compromisso + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + "]";
+		return "RelatorioVo [funcionario=" + funcionario + ", agenda=" + agenda + ", compromisso=" + compromisso + "]";
 	}
 	
 }

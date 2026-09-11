@@ -60,7 +60,7 @@
 					<div class="card-footer">
 						<div class="form-row d-flex">
 							<button type="submit" class="btn btn-primary col-sm-4 offset-sm-1">Gerar em Tela (HTML)</button>
-							<button type="submit" name="formato" value="excel" class="btn btn-success col-sm-4 offset-sm-2">Baixar Planilha (XLSX)</button>
+							<button type="submit" name="formato" value="excel" class="btn btn-success col-sm-4 offset-sm-2">Baixar Planilha (XLS)</button>
 						</div>
 					</div>
 				</div>
