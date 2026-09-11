@@ -16,8 +16,8 @@ CREATE TABLE compromissos (
 	nm_compromisso VARCHAR(255) NOT NULL,
 	rowid_funcionario bigint,
 	rowid_agenda bigint,
-	data_compromisso DATE,
-	hora_compromisso TIME,
+	data_compromisso DATE NOT NULL,
+	hora_compromisso TIME NOT NULL,
 	FOREIGN KEY (rowid_funcionario) REFERENCES funcionario(rowid),
 	FOREIGN KEY (rowid_agenda) REFERENCES agenda(rowid)
 );

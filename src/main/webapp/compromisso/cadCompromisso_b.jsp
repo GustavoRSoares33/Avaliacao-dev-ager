@@ -44,8 +44,8 @@
 							<tr>
 								<td>${rowid}</td>
 								<td>${nome}</td>
-								<td>${funcionario.nome}</td>
-								<td>${agenda.nome}</td>
+								<td><s:property value="funcionario.nome" default="Não atribuído"/></td>
+								<td><s:property value="agenda.nome" default="Não atribuído"/></td>
 								
 								<td><s:date name="dataCompromisso" format="dd/MM/yyyy" /></td>
 								<td><s:date name="horaCompromisso" format="HH:mm" /></td>

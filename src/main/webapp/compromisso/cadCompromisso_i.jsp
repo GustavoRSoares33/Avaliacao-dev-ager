@@ -69,7 +69,7 @@
 						            name="compromissoVo.agenda.rowid" 
 						            list="agendas"  
 						            headerKey=""  
-						            headerValue="Selecione..." 
+						            headerValue="Não atribuido" 
 						            listKey="rowid" 
 						            listValue="nome"								
 						        />						
@@ -87,7 +87,7 @@
 						            name="compromissoVo.funcionario.rowid" 
 						            list="funcionarios"  
 						            headerKey=""  
-						            headerValue="Selecione..." 
+						            headerValue="Não atribuido" 
 						            listKey="rowid" 
 						            listValue="nome"								
 						        />						

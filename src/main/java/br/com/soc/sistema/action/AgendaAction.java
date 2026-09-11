@@ -79,11 +79,11 @@ public class AgendaAction extends Action{
 	}
 	
 	public String excluir() {
-		List<CompromissoVo> vinculados = compromissoBusiness.buscarPorAgenda(agendaVo.getRowid());
-		
 		if(agendaVo == null || agendaVo.getRowid() == null) {
 			return REDIRECT;
 		}
+		
+		List<CompromissoVo> vinculados = compromissoBusiness.buscarPorAgenda(agendaVo.getRowid());
 		
 		if(vinculados != null && !vinculados.isEmpty()) {
 			addActionError("Não é possível excluir esta agenda, pois ela possui compromissos cadastrados.");

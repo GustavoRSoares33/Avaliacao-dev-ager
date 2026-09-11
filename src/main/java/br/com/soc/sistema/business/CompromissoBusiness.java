@@ -22,19 +22,8 @@ public class CompromissoBusiness {
 	}
 	
 	public void novoCompromisso(CompromissoVo compromisso) {
-		if(compromisso.getNome() == null || compromisso.getNome().trim().isEmpty()) {
-			throw new IllegalArgumentException("Nome nao pode ser em branco");
-		}
 		
-		if(compromisso.getDataCompromisso() == null) {
-			throw new IllegalArgumentException("Selecione uma data para o compromisso");
-		}
-		
-		if(compromisso.getHoraCompromisso() == null) {
-			throw new IllegalArgumentException("Selecione um horário para o compromisso");
-		}
-		
-		validarDisponibilidadeAgenda(compromisso);
+		validarCompromisso(compromisso);
 		
 		try {
 			dao.insertCompromisso(compromisso);
@@ -44,24 +33,13 @@ public class CompromissoBusiness {
 	}
 	
 	public void alterarCompromisso(CompromissoVo compromisso) {
-		if(compromisso.getNome() == null || compromisso.getNome().trim().isEmpty()) {
-			throw new IllegalArgumentException("Nome nao pode ser em branco");
-		}
 		
-		if(compromisso.getDataCompromisso() == null) {
-			throw new IllegalArgumentException("Selecione uma data para o compromisso");
-		}
-		
-		if(compromisso.getHoraCompromisso() == null) {
-			throw new IllegalArgumentException("Selecione um horário para o compromisso");
-		}
-		
-		validarDisponibilidadeAgenda(compromisso);
+		validarCompromisso(compromisso);
 		
 		try {
 			dao.updateCompromisso(compromisso);
 		}catch (Exception e) {
-			throw new BusinessException("Nao foi possivel realizar a inclusao do compromisso");
+			throw new BusinessException("Nao foi possivel alterar o compromisso");
 		}
 	}
 	
@@ -94,42 +72,58 @@ public class CompromissoBusiness {
 		if (idFuncionario == null || idFuncionario.trim().isEmpty()) {
 			throw new IllegalArgumentException("O código do funcionário não pode ser nulo.");
 		}
-		dao.excluirSeNaoExistirOFuncionario(idFuncionario);
+		dao.excluirPorFuncionario(idFuncionario);
 	}
 	
-	public void validarDisponibilidadeAgenda(CompromissoVo compromisso) {
-		if (compromisso.getAgenda() != null && compromisso.getAgenda().getRowid() != null
-				&& compromisso.getHoraCompromisso() != null) {
-
-			AgendaVo agenda = agendaBusiness.buscarAgendaPor(compromisso.getAgenda().getRowid());
-
-			if (agenda != null && agenda.getPeriodoDisponivel() != null) {
+	private void validarDisponibilidadeAgenda(CompromissoVo compromisso) {
+		
+		if(compromisso.getAgenda() == null ||
+			(compromisso.getAgenda().getRowid() == null) || 
+				(compromisso.getAgenda().getRowid().trim().isEmpty())){
+			return;
+		}
+		
+		AgendaVo agenda = agendaBusiness.buscarAgendaPor(compromisso.getAgenda().getRowid());
+		
+		if(agenda == null) {
+			throw new IllegalArgumentException("Agenda não encontrada");
+		}
+		
+		if(agenda.getPeriodoDisponivel() == null) {
+			return;
+		}
+		
+		int horaAgendada = compromisso.getHoraCompromisso().toLocalTime().getHour();
+		
+		String codigoPeriodo = agenda.getPeriodoDisponivel().getCodigo();
 				
-				int horaAgendada = compromisso.getHoraCompromisso().toLocalTime().getHour();
-				
-				String codigoPeriodo = agenda.getPeriodoDisponivel().getCodigo();
-
-				if ("1".equals(codigoPeriodo) && horaAgendada >= 12) {
-					throw new IllegalArgumentException("A agenda selecionada está disponível apenas no período da Manhã (antes das 12:00).");
-				} 
-				else if ("2".equals(codigoPeriodo) && horaAgendada < 12) {
-					throw new IllegalArgumentException("A agenda selecionada está disponível apenas no período da Tarde (a partir das 12:00).");
-				}
-			}
+		if ("1".equals(codigoPeriodo) && horaAgendada >= 12) {
+			throw new IllegalArgumentException("A agenda selecionada está disponível apenas no período da Manhã (antes das 12:00).");
+		} 
+		
+		if ("2".equals(codigoPeriodo) && horaAgendada < 12) {
+			throw new IllegalArgumentException("A agenda selecionada está disponível apenas no período da Tarde (a partir das 12:00).");
 		}
 	}
 	
-	public void salvarCompromisso(CompromissoVo compromisso) {
+	private void validarCompromisso(CompromissoVo compromisso) {
+		if(compromisso == null) {
+			throw new IllegalArgumentException("Compromisso não informado");
+		}
+		
 		if(compromisso.getNome() == null || compromisso.getNome().trim().isEmpty()) {
 			throw new IllegalArgumentException("Nome nao pode ser em branco");
 		}
 		
-		validarDisponibilidadeAgenda(compromisso);
-		
-		if (compromisso.getRowid() == null || compromisso.getRowid().isEmpty()) {
-			dao.insertCompromisso(compromisso);
-		} else {
-			dao.updateCompromisso(compromisso);
+		if(compromisso.getDataCompromisso() == null) {
+			throw new IllegalArgumentException("Selecione uma data para o compromisso");
 		}
+		
+		if(compromisso.getHoraCompromisso() == null) {
+			throw new IllegalArgumentException("Selecione um horário para o compromisso");
+		}
+		
+		validarDisponibilidadeAgenda(compromisso);
 	}
+	
 }

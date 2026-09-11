@@ -47,15 +47,11 @@ public class CompromissoAction extends Action{
 			}
 			
 			try {
-				if (compromissoVo.getAgenda() != null && 
-						   (compromissoVo.getAgenda().getRowid() == null || 
-						   		(compromissoVo.getAgenda().getRowid().trim().isEmpty()))) {
-							
-							compromissoVo.setAgenda(null);
-						}
-				limparCampos();
+				transformarVazioEmNull();
 				converterDataEHora();
+				
 				business.novoCompromisso(compromissoVo);
+				
 				return REDIRECT;
 				
 			}catch(IllegalArgumentException e) {
@@ -66,9 +62,9 @@ public class CompromissoAction extends Action{
 		}else if("telaAgenda".equals(telaAtual)) {
 			String idDaAgenda = compromissoVo.getAgenda().getRowid();
 			try {
-				limparCampos();
+				transformarVazioEmNull();
 				converterDataEHora();
-				business.salvarCompromisso(compromissoVo);
+				business.novoCompromisso(compromissoVo);
 				
 				carregarAgenda(idDaAgenda);
 				
@@ -121,7 +117,7 @@ public class CompromissoAction extends Action{
 		}
 		
 		try {
-			limparCampos();
+			transformarVazioEmNull();
 			converterDataEHora();
 			
 			business.alterarCompromisso(compromissoVo);
@@ -164,13 +160,17 @@ public class CompromissoAction extends Action{
 		compromissos.addAll(business.buscarPorAgenda(idAgenda));
 	}
 	
-	private void limparCampos() {
+	private void transformarVazioEmNull() {
 		if (compromissoVo.getAgenda() != null && 
-		   (compromissoVo.getAgenda().getRowid() == null || compromissoVo.getAgenda().getRowid().trim().isEmpty())) {
+				(compromissoVo.getAgenda().getRowid() == null || 
+					(compromissoVo.getAgenda().getRowid().trim().isEmpty()))) {
+			
 			compromissoVo.setAgenda(null);
 		}
 		if (compromissoVo.getFuncionario() != null && 
-		   (compromissoVo.getFuncionario().getRowid() == null || compromissoVo.getFuncionario().getRowid().trim().isEmpty())) {
+				(compromissoVo.getFuncionario().getRowid() == null || 
+					(compromissoVo.getFuncionario().getRowid().trim().isEmpty()))) {
+			
 			compromissoVo.setFuncionario(null);
 		}
 	}

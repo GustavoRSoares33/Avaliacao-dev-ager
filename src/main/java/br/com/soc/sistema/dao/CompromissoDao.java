@@ -28,26 +28,17 @@ public class CompromissoDao extends Dao{
 			if(compromisso.getFuncionario() != null && compromisso.getFuncionario().getRowid() != null && !compromisso.getFuncionario().getRowid().trim().isEmpty()) {
 				ps.setString(i++, compromisso.getFuncionario().getRowid());
 			}else {
-				ps.setNull(i++, java.sql.Types.VARCHAR);
+				ps.setNull(i++, java.sql.Types.BIGINT);
 			}
 			
 			if(compromisso.getAgenda() != null && compromisso.getAgenda().getRowid() != null && !compromisso.getAgenda().getRowid().trim().isEmpty()) {
 				ps.setString(i++, compromisso.getAgenda().getRowid());
 			}else {
-				ps.setNull(i++, java.sql.Types.VARCHAR);
+				ps.setNull(i++, java.sql.Types.BIGINT);
 			}
 			
-			if(compromisso.getDataCompromisso() != null) {
-				ps.setDate(i++, compromisso.getDataCompromisso());
-			}else {
-				ps.setNull(i++, java.sql.Types.DATE);
-			}
-			
-			if(compromisso.getHoraCompromisso() != null) {
-				ps.setTime(i++, compromisso.getHoraCompromisso());
-			}else {
-				ps.setNull(i++, java.sql.Types.TIME);
-			}
+			ps.setDate(i++, compromisso.getDataCompromisso());
+			ps.setTime(i++, compromisso.getHoraCompromisso());
 			ps.executeUpdate();
 			
 		}catch (SQLException e) {
@@ -89,12 +80,12 @@ public class CompromissoDao extends Dao{
 				
 				FuncionarioVo funcionario = new FuncionarioVo();
 				funcionario.setRowid(rs.getString("id_funcionario"));
-				funcionario.setNome(rs.getString("nome_funcionario") != null ? rs.getString("nome_funcionario") : "Não atribuido");
+				funcionario.setNome(rs.getString("nome_funcionario"));
 				vo.setFuncionario(funcionario);
 				
 				AgendaVo agenda = new AgendaVo();
 				agenda.setRowid(rs.getString("id_agenda"));
-				agenda.setNome(rs.getString("nome_agenda") != null ? rs.getString("nome_agenda") : "Não atribuido");
+				agenda.setNome(rs.getString("nome_agenda"));
 				vo.setAgenda(agenda);
 				
 				compromissos.add(vo);
@@ -121,27 +112,17 @@ public class CompromissoDao extends Dao{
 			if(compromisso.getFuncionario() != null && compromisso.getFuncionario().getRowid() != null && !compromisso.getFuncionario().getRowid().trim().isEmpty()) {
 				ps.setString(i++, compromisso.getFuncionario().getRowid());
 			}else {
-				ps.setNull(i++, java.sql.Types.VARCHAR);
+				ps.setNull(i++, java.sql.Types.BIGINT);
 			}
 			
 			if(compromisso.getAgenda() != null && compromisso.getAgenda().getRowid() != null && !compromisso.getAgenda().getRowid().trim().isEmpty()) {
 				ps.setString(i++, compromisso.getAgenda().getRowid());
 			}else {
-				ps.setNull(i++, java.sql.Types.VARCHAR);
+				ps.setNull(i++, java.sql.Types.BIGINT);
 			}
 			
-			if(compromisso.getDataCompromisso() != null) {
-				ps.setDate(i++, compromisso.getDataCompromisso());
-			}else {
-				ps.setNull(i++, java.sql.Types.DATE);
-			}
-			
-			if(compromisso.getHoraCompromisso() != null) {
-				ps.setTime(i++, compromisso.getHoraCompromisso());
-			}else {
-				ps.setNull(i++, java.sql.Types.TIME);
-			}
-			
+			ps.setDate(i++, compromisso.getDataCompromisso());
+			ps.setTime(i++, compromisso.getHoraCompromisso());
 			ps.setString(i++, compromisso.getRowid());
 			
 			ps.executeUpdate();
@@ -204,12 +185,12 @@ public class CompromissoDao extends Dao{
 					
 					FuncionarioVo funcionario = new FuncionarioVo();
 					funcionario.setRowid(rs.getString("id_funcionario"));
-					funcionario.setNome(rs.getString("nome_funcionario") != null ? rs.getString("nome_funcionario") : "Não atribuído");
+					funcionario.setNome(rs.getString("nome_funcionario"));
 					vo.setFuncionario(funcionario);
 					
 					AgendaVo agenda = new AgendaVo();
 					agenda.setRowid(rs.getString("id_agenda"));
-					agenda.setNome(rs.getString("nome_agenda") != null ? rs.getString("nome_agenda") : "Não atribuída");
+					agenda.setNome(rs.getString("nome_agenda"));
 					vo.setAgenda(agenda);
 				}
 				return vo;
@@ -258,12 +239,12 @@ public class CompromissoDao extends Dao{
 	                
 	                funcionario = new FuncionarioVo();
 	                funcionario.setRowid(rs.getString("id_funcionario"));
-	                funcionario.setNome(rs.getString("nome_funcionario") != null ? rs.getString("nome_funcionario") : "Não atribuído");
+	                funcionario.setNome(rs.getString("nome_funcionario"));
 	                vo.setFuncionario(funcionario);
 	                
 	                agenda = new AgendaVo();
 	                agenda.setRowid(rs.getString("id_agenda"));
-	                agenda.setNome(rs.getString("nome_agenda") != null ? rs.getString("nome_agenda") : "Não atribuída");
+	                agenda.setNome(rs.getString("nome_agenda"));
 	                vo.setAgenda(agenda);
 	                
 	                lista.add(vo);
@@ -277,7 +258,7 @@ public class CompromissoDao extends Dao{
 	    }
 	}
 	
-	public void excluirSeNaoExistirOFuncionario(String idFuncionario) {
+	public void excluirPorFuncionario(String idFuncionario) {
 		StringBuilder query = new StringBuilder("DELETE FROM compromissos WHERE rowid_funcionario = ?");
 		
 		try(
