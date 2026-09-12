@@ -1,7 +1,5 @@
 package br.com.soc.sistema.vo;
 
-import java.sql.Date;
-
 public class RelatorioVo {
 
 	private FuncionarioVo funcionario;
