@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Detalhes da Agenda</title>
+		<title><s:text name="label.agenda.detalhes"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">	
@@ -16,7 +16,10 @@
 					<s:if test="hasActionErrors()">
 						<div class="alert alert-danger alert-dismissible fade show" role="alert">
 							<s:iterator value="actionErrors">
-								<strong>Atenção:</strong> <s:property/><br/>
+								<strong>
+									<s:text name="label.atencao"/>
+								</strong> 
+								<s:property/><br/>
 						     </s:iterator>
 						     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
@@ -27,48 +30,65 @@
 			<div class="card shadow-sm mb-4">
 				<div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
 					<h5 class="mb-0">
-						<strong>Agenda:</strong> ${agendaVo.nome} 
+						<strong>
+							<s:text name="label.agenda"/>:
+						</strong> ${agendaVo.nome} 
 					</h5>
-					<span class="badge bg-light text-dark fs-6">Período: ${agendaVo.periodoDisponivel.descricao}</span>
+					<span class="badge bg-light text-dark fs-6">
+						<s:text name="label.periodo"/>: 
+						${agendaVo.periodoDisponivel.descricao}
+					</span>
 				</div>
 				
 				<div class="card-body bg-light">
-					<h6 class="card-subtitle mb-3 text-muted">Agendar Novo Compromisso nesta sala:</h6>
+					<h6 class="card-subtitle mb-3 text-muted">
+						<s:text name="label.agenda.novo.compromisso"/>
+					</h6>
 					
 					<s:form action="/novoCompromissos.action" cssClass="row g-3 align-items-end">
 						<input type="hidden" name="telaAtual" value="telaAgenda" />
 						<s:hidden name="compromissoVo.agenda.rowid" value="%{agendaVo.rowid}" />
 						
 						<div class="col-md-3">
-							<label class="form-label fw-bold">Nome do Compromisso</label>
-							<s:textfield cssClass="form-control" name="compromissoVo.nome" placeholder="Ex: Consulta médica"/>
+							<label class="form-label fw-bold">
+								<s:text name="label.compromisso.nome"/>
+							</label>
+							<s:textfield cssClass="form-control" name="compromissoVo.nome" placeholder="%{getText('label.compromisso.placeholder')}"/>
 						</div>
 						
 						<div class="col-md-3">
-							<label class="form-label fw-bold">Funcionário Responsável</label>
+							<label class="form-label fw-bold">
+								<s:text name="label.compromisso.funcionario.responsavel"/>
+							</label>
 							<s:select  
 					            cssClass="form-select" 
 					            name="compromissoVo.funcionario.rowid" 
 					            list="funcionarios"  
 					            headerKey=""  
-					            headerValue="Selecione (Opcional)..." 
+					            headerValue="%{getText('label.selecione')}" 
 					            listKey="rowid" 
 					            listValue="nome"								
 					        />
 						</div>
 						
 						<div class="col-md-2">
-							<label class="form-label fw-bold">Data</label>
+							<label class="form-label fw-bold">
+								<s:text name="label.data"/>
+							</label>
 							<s:textfield type="date" cssClass="form-control" name="dataDigitada"/>
 						</div>
 						
 						<div class="col-md-2">
-							<label class="form-label fw-bold">Hora</label>
+							<label class="form-label fw-bold">
+								<s:text name="label.hora"/>
+							</label>
 							<s:textfield type="time" cssClass="form-control" name="horaDigitada"/>
 						</div>
 						
 						<div class="col-md-2 d-grid">
-							<button class="btn btn-success" type="submit">Agendar</button>
+							<button class="btn btn-success" type="submit">
+								<s:text name="label.compromisso.agendar"/>
+							</button>
 						</div>
 					</s:form>
 				</div>
@@ -79,10 +99,10 @@
 					<thead>
 						<tr class="table-dark">
 							<th><s:text name="label.id"/></th>
-							<th>Nome do Compromisso</th>
-							<th>Funcionário</th>
-							<th>Data</th>
-							<th>Hora</th>
+							<th><s:text name="label.compromisso.nome"/></th>
+							<th><s:text name="label.funcionario"/></th>
+							<th><s:text name="label.data"/></th>
+							<th><s:text name="label.hora"/></th>
 							<th class="text-end"><s:text name="label.acao"/></th>
 						</tr>
 					</thead>
@@ -92,7 +112,14 @@
 							<tr>
 								<td>${rowid}</td>
 								<td><strong>${nome}</strong></td>
-								<td>${funcionario.nome}</td>
+								<td>
+									<s:if test="funcionario.nome != null && !funcionario.nome.trim().isEmpty()">
+										<s:property value="funcionario.nome"/>
+									</s:if>
+									<s:else>
+										<s:text name="label.nao.atribuido"/>
+									</s:else>
+								</td>
 								<td><s:date name="dataCompromisso" format="dd/MM/yyyy" /></td>
 								<td><s:date name="horaCompromisso" format="HH:mm" /></td>
 								
@@ -114,7 +141,7 @@
 						<s:if test="compromissos.isEmpty()">
 							<tr>
 								<td colspan="6" class="text-center text-muted py-4">
-									<em>Não há compromissos marcados para esta agenda ainda.</em>
+									<em><s:text name="label.agenda.sem.compromisso"/></em>
 								</td>
 							</tr>
 						</s:if>
@@ -125,7 +152,7 @@
 			<div class="row mt-3 mb-5">
 				<div class="col">
 					<s:url action="todasAgendas" var="voltar"/>
-					<a href="${voltar}" class="btn btn-success">Voltar para Agendas</a>
+					<a href="${voltar}" class="btn btn-success"><s:text name="label.agenda.voltar"/></a>
 				</div>
 			</div>
 			

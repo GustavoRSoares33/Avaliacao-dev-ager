@@ -4,7 +4,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Gerar Relatório</title>
+		<title>
+			<s:text name="label.relatorio.gerar"/>
+		</title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">
@@ -21,7 +23,9 @@
 							</div>
 							
 							<div class="col-sm">
-								<h5 class="card-title">Gerar Relatório</h5>
+								<h5 class="card-title">
+									<s:text name="label.relatorio.gerar"/>
+								</h5>
 							</div>
 						</div>
 					</div>
@@ -30,7 +34,10 @@
 						<s:if test="hasActionErrors()">
 						        <div class="alert alert-danger alert-dismissible fade show" role="alert">
 						            <s:iterator value="actionErrors">
-						                <strong>Atenção:</strong> <s:property/><br/>
+						                <strong>
+						                	<s:text name="label.atencao"/>
+						                </strong> 
+						                <s:property/><br/>
 						            </s:iterator>
 						            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						        </div>
@@ -38,7 +45,7 @@
 						
 						<div class="row align-items-center mt-3">
 							<label class="col-sm-2 col-form-label text-center">
-								Data Inicial:
+								<s:text name="label.relatorio.data.inicial"/>
 							</label>	
 
 							<div class="col-sm-3">
@@ -48,7 +55,7 @@
 
 						<div class="row align-items-center mt-3">
 							<label class="col-sm-2 col-form-label text-center">
-								Data Final:
+								<s:text name="label.relatorio.data.final"/>
 							</label>	
 
 							<div class="col-sm-3">
@@ -59,8 +66,12 @@
 
 					<div class="card-footer">
 						<div class="form-row d-flex">
-							<button type="submit" class="btn btn-primary col-sm-4 offset-sm-1">Gerar em Tela (HTML)</button>
-							<button type="submit" name="formato" value="excel" class="btn btn-success col-sm-4 offset-sm-2">Baixar Planilha (XLS)</button>
+							<button type="submit" class="btn btn-primary col-sm-4 offset-sm-1">
+								<s:text name="label.relatorio.gerar.html"/>
+							</button>
+							<button type="submit" name="formato" value="excel" class="btn btn-success col-sm-4 offset-sm-2">
+								<s:text name="label.relatorio.gerar.xls"/>
+							</button>
 						</div>
 					</div>
 				</div>

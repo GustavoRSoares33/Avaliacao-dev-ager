@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title><s:text name="label.titulo.pagina.consulta"/></title>
+		<title><s:text name="label.agenda.cadastradas"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">	
@@ -15,7 +15,9 @@
 					<s:if test="hasActionErrors()">
 						<div class="alert alert-danger alert-dismissible fade show" role="alert">
 							<s:iterator value="actionErrors">
-								<strong>Atenção:</strong> <s:property/><br/>
+								<strong>
+									<s:text name="label.atencao"/>
+								</strong> <s:property/><br/>
 						     </s:iterator>
 						     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
@@ -31,7 +33,7 @@
 						            name="filtrar.opcoesCombo" 
 						            list="listaOpcoesCombo"  
 						            headerKey=""  
-						            headerValue="Escolha..." 
+						            headerValue="%{getText('label.escolha')}" 
 						            listKey="%{codigo}" 
 						            listValueKey="%{descricao}"
 						            value="filtrar.opcoesCombo.codigo"	
@@ -46,7 +48,7 @@
 						            name="filtrar.valorBusca" 
 						            list="listaPeriodos"  
 						            headerKey=""  
-						            headerValue="Selecione..." 
+						            headerValue="%{getText('label.selecione')}" 
 						            listKey="codigo" 
 						            listValue="descricao"
 						            disabled="true"									
@@ -54,7 +56,9 @@
 						        
 							<button class="btn btn-primary" type="submit"><s:text name="label.pesquisar"/></button>
 							<s:url action="todasAgendas" var="urlLimpar"/>
-        					<a href="${urlLimpar}" class="btn btn-dark">Limpar</a>
+        					<a href="${urlLimpar}" class="btn btn-dark">
+        						<s:text name="label.limpar"/>
+        					</a>
 						</div>
 					</s:form>			
 				</div>

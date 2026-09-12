@@ -4,7 +4,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Compromissos Cadastrados</title>
+		<title>
+			<s:text name="label.compromisso.cadastrados"/>
+		</title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">	
@@ -15,7 +17,9 @@
 					<s:if test="hasActionErrors()">
 						<div class="alert alert-danger alert-dismissible fade show" role="alert">
 							<s:iterator value="actionErrors">
-								<strong>Atenção:</strong> <s:property/><br/>
+								<strong>
+									<s:text name="label.atencao"/>
+								</strong> <s:property/><br/>
 						     </s:iterator>
 						     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
@@ -31,11 +35,13 @@
 						<tr>
 							<th><s:text name="label.id"/></th>
 							<th><s:text name="label.nome"/></th>
-							<th>Funcionário</th>
-							<th>Agenda</th>
-							<th>Data</th>
-							<th>Hora</th>
-							<th class="text-end mt-5"><s:text name="label.acao"/></th>
+							<th><s:text name="label.funcionario"/></th>
+							<th><s:text name="label.agenda"/></th>
+							<th><s:text name="label.data"/></th>
+							<th><s:text name="label.hora"/></th>
+							<th class="text-end mt-5">
+								<s:text name="label.acao"/>
+							</th>
 						</tr>
 					</thead>
 					
@@ -44,8 +50,22 @@
 							<tr>
 								<td>${rowid}</td>
 								<td>${nome}</td>
-								<td><s:property value="funcionario.nome" default="Não atribuído"/></td>
-								<td><s:property value="agenda.nome" default="Não atribuído"/></td>
+								<td>
+									<s:if test="funcionario.nome != null && !funcionario.nome.trim().isEmpty()">
+										<s:property value="funcionario.nome"/>
+									</s:if>
+									<s:else>
+										<s:text name="label.nao.atribuido"/>
+									</s:else>
+								</td>
+								<td>
+									<s:if test="agenda.nome != null && !agenda.nome.trim().isEmpty()">
+										<s:property value="agenda.nome"/>
+									</s:if>
+									<s:else>
+										<s:text name="label.nao.atribuido"/>
+									</s:else>
+								</td>
 								
 								<td><s:date name="dataCompromisso" format="dd/MM/yyyy" /></td>
 								<td><s:date name="horaCompromisso" format="HH:mm" /></td>
